@@ -43,8 +43,7 @@ void initTask(void)
 
     can0_init() ;
 
-    /* To turn On LED For The First Time - This Condition only for the Node no. 1 */
-   xSemaphoreGive(xSemaphore);
+  
 
     vTaskSuspend( NULL);
 
@@ -80,7 +79,7 @@ void receiveTask(void)
             state = 1;  /* 1 means normal state */
 
             CANMessageGet(CAN0_BASE, 1, &sCANMessage, 0);
-        if (pui8MsgData == 3 )      /* if data received correctly give the semaphore */
+        if (pui8MsgData == 1 )      /* if data received correctly give the semaphore */
             {
 
                 pui8MsgData = 0 ;
@@ -138,7 +137,7 @@ void sentTask(void)
            uint8_t *pui8MsgData;
            pui8MsgData = (uint8_t *) &ui32MsgData;
 
-           ui32MsgData = 3;
+           ui32MsgData = 2;
            sCANMessage.ui32MsgID = 1;
            sCANMessage.ui32MsgIDMask = 0;
            sCANMessage.ui32Flags = MSG_OBJ_TX_INT_ENABLE;
